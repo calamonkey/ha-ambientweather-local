@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Station</title>
+        <link href="axcss0.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <table width="800" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="2" align="right" bgcolor="#0088F7">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="20" height = "80">&nbsp;</td>                                             
+                            <td ><img src="img/1.jpg" width="74" height="80" ></td>
+							<td width="10">&nbsp;</td>
+                           	<td class="txtstyle_1" >AmbientWeather 4.6.2</td> 
+                        </tr>
+                </table></td>
+            </tr>
+            <tr> 
+                <td colspan="2" align="right" bgcolor="#60B7FF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="left" bgcolor="#C0C0C0">
+                    <table width="20" border="0" cellpadding="0" cellspacing="0">
+                        <tr>          
+                            <td bgcolor="#C0C0C0"><div class="menuitem_1"><a href="bscsetting.htm">Local Network</a></div></td>
+                            <td bgcolor="#C0C0C0"><div class="menuitem_1"><a href="weather.htm">Weather Network</a></div></td>
+                            <td bgcolor="#EDEFEF"><div class="menuitem_1"><a href="station.htm">Station Settings</a></div></td>
+                            <td bgcolor="#C0C0C0"><div class="menuitem_1"><a href="livedata.htm">Live Data</a></div></td>
+                            <td bgcolor="#C0C0C0"><div class="menuitem_1"><a href="correction.htm">Calibration</a></div></td>  
+                        </tr>
+                </table></td>
+            </tr>
+            <form name="station" method="POST" onsubmit="return chkForm(0);">
+                 <tr>
+                    <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>
+                </tr> 
+                <tr>
+                    <td colspan="2" bgcolor="#EDEFEF"><div class="subitem_1">Wireless Transmitter Settings</div></td>
+                </tr>
+                <tr> 
+                    <td bgcolor="#EDEFEF"><div class="item_1">Weather Station Model Number</div></td>
+                    <td bgcolor="#EDEFEF"><select name="WsModel" class="item_2" style="WIDTH: 100px">
+                            <option value="0">WS-1401-IP</option>
+                            <option value="1"		  >WS-1201-IP</option>
+                            <option value="2"		  >WS-0800-IP</option>
+                            <option value="3"		  >WS-1700-IP</option>
+                            <option value="4"		  >WS-1600-IP</option>
+                            <option value="5"		  >WS-1500-IP</option>
+                            <option value="6"		   selected>WS-1550-IP</option>
+                            <option value="7"		  >WS-1900-IP</option>
+                  </select></td>
+                </tr>
+                <tr> 
+                <tr> 
+                    <td width="419" bgcolor="#EDEFEF"><div class="item_1">Wireless Receive Frequency</div></td>
+                    <td width="421" bgcolor="#EDEFEF"><select name="WRFreq" class="item_2" disabled="disabled" style="WIDTH: 80px">
+                            <option value="0" >434</option>
+                            <option value="1"          >868</option>
+                            <option value="2"           selected>915</option>
+                            <option value="3"          >920</option>
+                    </select></td>
+                </tr>  
+  				<tr>
+                    <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>  
+                </tr>                            
+                <tr>
+                    <td colspan="2" bgcolor="#EDEFEF"><div class="subitem_1">DST and Time Zone Setting</div></td>
+                </tr>                
+                
+                <tr>
+                    <td bgcolor="#EDEFEF"><div class="item_1">Time Zone</div></td>
+                    <td bgcolor="#EDEFEF"><input name="timezone" type="text" class="item_2" style="WIDTH: 80px" value="-5.0" maxlength="5" />
+                    <span id="timezone_msg" class="errMsg0"></span></td>
+                </tr>
+                <tr><td bgcolor="#EDEFEF"></td>                        
+                <td bgcolor="#EDEFEF"><span class="setinfo">Range: -12.0 to 12.0 Default:-5.0</span></td> 
+                </tr>	
+                
+                <tr>                   
+                    <td width="419" bgcolor="#EDEFEF"><div class="item_1">Daylight Savings Time </div></td>
+                    <td width="421" bgcolor="#EDEFEF"><select name="dst" class="item_2"  style="WIDTH: 80px">
+                            <option value="0"  >off</option>
+                            <option value="1" selected>on</option>
+                    </select></td>
+                </tr>      
+ 				<tr>
+                    <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>  
+                </tr>                
+                <tr>
+                    <td colspan="2" bgcolor="#EDEFEF"><div class="subitem_1">Units of Measure</div></td>
+                </tr>
+                <tr> 
+                    <td bgcolor="#EDEFEF"><div class="item_1">Wind</div></td>
+                    <td bgcolor="#EDEFEF"><select name="unit_Wind" class="item_2"  style="WIDTH: 80px">
+                            <option value="0"  		   >m/s</option>
+                            <option value="1"           selected>km/h</option>          
+                            <option value="2"          >ft/s</option>
+                            <option value="3"          >bft</option>
+                            <option value="4" >mph</option>
+                            <option value="5"          >knot</option>
+                    </select></td>
+                </tr>
+                <tr> 
+                    <td width="419" bgcolor="#EDEFEF"><div class="item_1">Rainfall</div></td>
+                    <td width="421" bgcolor="#EDEFEF"><select name="u_Rainfall" class="item_2"  style="WIDTH: 80px">
+                            <option value="0"  		    selected>mm</option>
+                            <option value="1" >in</option>
+                    </select></td>
+                </tr>
+                <tr> 
+                    <td bgcolor="#EDEFEF"><div class="item_1">Pressure</div></td>
+                    <td bgcolor="#EDEFEF"><select name="unit_Pressure" class="item_2" style="WIDTH: 80px">                                                
+                            <option value="0"           selected>hpa</option>
+                            <option value="1" >inhg</option>
+                            <option value="2"          >mmhg</option>
+                    </select></td>
+                </tr>
+                <tr> 
+                    <td width="419" bgcolor="#EDEFEF"><div class="item_1">Temperature</div></td>
+                    <td width="421" bgcolor="#EDEFEF"><select name="u_Temperature" class="item_2"  style="WIDTH: 80px">
+                            <option value="0"  		    selected>degC</option>
+                            <option value="1" >degF</option>
+                    </select></td>
+                </tr>               
+                <tr> 
+                    <td bgcolor="#EDEFEF"><div class="item_1">Solar Radiation</div></td>
+                    <td bgcolor="#EDEFEF"><select name="unit_Solar" class="item_2" style="WIDTH: 80px">
+                      <option value="0"          >lux</option>
+                      <option value="1"	selected >w/m2</option>
+                      <option value="2"  		 >fc</option>
+                    </select></td>
+                </tr>
+                <tr> 
+                    <td bgcolor="#EDEFEF"><div class="item_1">PM2.5</div></td>
+                    <td bgcolor="#EDEFEF"><select name="unit_pm25" class="item_2"  disabled="disabled" style="WIDTH: 80px">
+                      <option value="0" selected >ug/m3</option>         
+                    </select></td>
+                </tr>
+                
+ 				<tr>
+                    <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>  
+                </tr>
+                <tr>
+ 					<td colspan="2" bgcolor="#EDEFEF"><div class="subitem_1">Automatic Restart</div></td>                
+                </tr>
+                <tr>
+                    <td bgcolor="#EDEFEF"><div class="item_1">System Reboot</div></td>
+                    <td bgcolor="#EDEFEF"><select name="auto_reboot" class="item_2" style="WIDTH: 80px">
+                            <option value="0"   >No</option>
+                            <option value="1" selected>Yes</option>                       
+                    </select></td>
+                </tr> 
+                
+                <tr>
+                	<td bgcolor="#EDEFEF"></td>                
+					<td bgcolor="#EDEFEF">
+					<span class="setinfo">If server communication is lost for 20 minutes, the ObserverIP will automatically reboot.</span>
+					</td> 
+              	</tr>              	
+           
+                <tr>
+                    <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>  
+                </tr>
+                <tr><td colspan="2" align="center" bgcolor="#EDEFEF">
+                    <input name="Apply" type="submit" class="item_2" style="WIDTH: 60px; HEIGHT: 24px;" onclick="setSubmitType(1)" value="Apply" />
+                    <input name="Cancel" type="reset" class="item_2" style="WIDTH: 60px; HEIGHT: 24px;" value="Cancel" />
+                </td></tr>
+            </form>
+            <tr>
+                <td colspan="2" bgcolor="#EDEFEF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" bgcolor="#C0C0C0">&nbsp;</td>
+            </tr>
+        </table>
+        <script src="axjs0.js" type="text/javascript"></script>
+    </body>
+</html>

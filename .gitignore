@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+secrets.yaml
+*.log
+config/
+local/
+scripts/private_strings.txt

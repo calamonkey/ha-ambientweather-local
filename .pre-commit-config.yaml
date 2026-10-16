@@ -1,0 +1,6 @@
+# Local scan for private data; also run in CI. Add your own strings to scripts/private_strings.txt (git-ignored).
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks

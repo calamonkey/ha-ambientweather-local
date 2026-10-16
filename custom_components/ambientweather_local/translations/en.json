@@ -1,0 +1,49 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "AmbientWeather Local",
+        "description": "Enter the IP address or hostname of the weather station's Wi-Fi module.",
+        "data": { "host": "Host" }
+      }
+    },
+    "error": { "cannot_connect": "Could not read live data from the station." },
+    "abort": { "already_configured": "This station is already configured." }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": { "scan_interval": "Polling interval (seconds)" }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outdoor_temperature": { "name": "Outdoor temperature" },
+      "indoor_temperature": { "name": "Indoor temperature" },
+      "outdoor_humidity": { "name": "Outdoor humidity" },
+      "indoor_humidity": { "name": "Indoor humidity" },
+      "absolute_pressure": { "name": "Absolute pressure" },
+      "relative_pressure": { "name": "Relative pressure" },
+      "wind_speed": { "name": "Wind speed" },
+      "wind_gust": { "name": "Wind gust" },
+      "max_daily_gust": { "name": "Max daily gust" },
+      "wind_direction": { "name": "Wind direction" },
+      "solar_radiation": { "name": "Solar radiation" },
+      "uv_index": { "name": "UV index" },
+      "pm25_outdoor": { "name": "PM2.5 outdoor" },
+      "pm25_indoor": { "name": "PM2.5 indoor" },
+      "hourly_rain_rate": { "name": "Hourly rain rate" },
+      "event_rain": { "name": "Event rain" },
+      "daily_rain": { "name": "Daily rain" },
+      "weekly_rain": { "name": "Weekly rain" },
+      "monthly_rain": { "name": "Monthly rain" },
+      "yearly_rain": { "name": "Yearly rain" }
+    },
+    "binary_sensor": {
+      "indoor_battery": { "name": "Indoor sensor battery" },
+      "outdoor_battery": { "name": "Outdoor sensor battery" },
+      "outdoor2_battery": { "name": "Outdoor sensor 2 battery" }
+    }
+  }
+}
