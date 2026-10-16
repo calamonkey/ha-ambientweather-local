@@ -1,6 +1,6 @@
 {
   "domain": "ambientweather_local",
-  "name": "AmbientWeather Local",
+  "name": "AmbientWeather Local (No API)",
   "codeowners": ["@calamonkey"],
   "config_flow": true,
   "documentation": "https://github.com/calamonkey/ha-ambientweather-local",

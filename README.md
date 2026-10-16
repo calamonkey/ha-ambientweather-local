@@ -1,6 +1,6 @@
-# AmbientWeather Local (Home Assistant)
+# AmbientWeather Local (No API)
 
-Reads an AmbientWeather station **directly over your LAN** instead of through the ambientweather.net cloud
+A Home Assistant integration for **older AmbientWeather stations that have no API support**. It reads an AmbientWeather station **directly over your LAN** instead of through the ambientweather.net cloud
 (no Application Key / API Key, no internet dependency).
 
 ## Who this is for
@@ -17,7 +17,7 @@ Newer consoles (WS-2000, WS-2902A+) can push to a custom server; those are bette
 HACS: add this repository as a custom repository (category *Integration*), install, restart Home Assistant.
 Manual: copy `custom_components/ambientweather_local` into your HA `config/custom_components/`.
 
-Then *Settings → Devices & services → Add integration → AmbientWeather Local* and enter the station's
+Then *Settings → Devices & services → Add integration → AmbientWeather Local (No API)* and enter the station's
 IP address (e.g. `192.0.2.10`). Give the station a DHCP reservation so the address does not change.
 
 ## Options
