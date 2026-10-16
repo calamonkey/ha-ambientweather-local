@@ -24,6 +24,7 @@ from . import AmbientLocalConfigEntry
 from .const import (
     DOMAIN,
     FC_TO_LUX,
+    LUX_PER_WM2,
     PRESSURE_UNITS,
     RAIN_UNITS,
     SOLAR_UNITS,
@@ -55,7 +56,9 @@ SENSORS: tuple[AmbientLocalSensorDescription, ...] = (
     AmbientLocalSensorDescription(key="dailygust", translation_key="max_daily_gust", kind="wind", device_class=SensorDeviceClass.WIND_SPEED, state_class=MEAS),
     AmbientLocalSensorDescription(key="windir", translation_key="wind_direction", native_unit_of_measurement=DEGREE, state_class=MEAS),
     AmbientLocalSensorDescription(key="solarrad", translation_key="solar_radiation", kind="solar", state_class=MEAS),
-    AmbientLocalSensorDescription(key="uvi", translation_key="uv_index", state_class=MEAS),
+    # Estimated: the station does not report lux, so derive it from solar radiation.
+    AmbientLocalSensorDescription(key="illuminance", translation_key="illuminance", kind="illuminance", device_class=SensorDeviceClass.ILLUMINANCE, native_unit_of_measurement="lx", state_class=MEAS, suggested_display_precision=0),
+    AmbientLocalSensorDescription(key="uvi",translation_key="uv_index", state_class=MEAS),
     AmbientLocalSensorDescription(key="pm25out", translation_key="pm25_outdoor", device_class=SensorDeviceClass.PM25, native_unit_of_measurement=CONCENTRATION_MICROGRAMS_PER_CUBIC_METER, state_class=MEAS),
     AmbientLocalSensorDescription(key="pm25in", translation_key="pm25_indoor", device_class=SensorDeviceClass.PM25, native_unit_of_measurement=CONCENTRATION_MICROGRAMS_PER_CUBIC_METER, state_class=MEAS),
     AmbientLocalSensorDescription(key="rainofhourly", translation_key="hourly_rain_rate", kind="rain_rate", device_class=SensorDeviceClass.PRECIPITATION_INTENSITY, state_class=MEAS),
@@ -65,6 +68,11 @@ SENSORS: tuple[AmbientLocalSensorDescription, ...] = (
     AmbientLocalSensorDescription(key="rainofmonthly", translation_key="monthly_rain", kind="rain", device_class=SensorDeviceClass.PRECIPITATION, state_class=TOTAL_INC),
     AmbientLocalSensorDescription(key="rainofyearly", translation_key="yearly_rain", kind="rain", device_class=SensorDeviceClass.PRECIPITATION, state_class=TOTAL_INC),
 )
+
+
+def source_key(desc: AmbientLocalSensorDescription) -> str:
+    """Field of livedata.htm a sensor reads from."""
+    return "solarrad" if desc.kind == "illuminance" else desc.key
 
 
 def native_unit(desc: AmbientLocalSensorDescription, units: dict[str, str]) -> str | None:
@@ -96,7 +104,10 @@ async def async_setup_entry(
     async_add_entities(
         AmbientLocalSensor(coordinator, desc)
         for desc in SENSORS
-        if coordinator.data.get(desc.key) is not None
+        if coordinator.data.get(source_key(desc)) is not None
+        # The derived lux estimate only makes sense when solar is reported in W/m²;
+        # in lux/fc modes the solar sensor itself is already illuminance.
+        and not (desc.kind == "illuminance" and coordinator.units["unit_Solar"] != "1")
     )
 
 
@@ -133,13 +144,15 @@ class AmbientLocalSensor(CoordinatorEntity[AmbientLocalCoordinator], SensorEntit
 
     @property
     def native_value(self) -> float | None:
-        raw = self.coordinator.data.get(self.entity_description.key)
+        raw = self.coordinator.data.get(source_key(self.entity_description))
         if raw is None:
             return None
         try:
             value = float(raw)
         except ValueError:
             return None
+        if self.entity_description.kind == "illuminance":
+            return round(value * LUX_PER_WM2, 1)
         if self.entity_description.kind == "solar" and self.coordinator.units["unit_Solar"] == "2":
             value *= FC_TO_LUX  # foot-candles -> lux
         return value

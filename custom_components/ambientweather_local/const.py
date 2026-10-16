@@ -6,6 +6,10 @@ CONF_SCAN_INTERVAL = "scan_interval"
 DEFAULT_SCAN_INTERVAL = 33  # station page refreshes every ~16 s; two cycles + 1
 MIN_SCAN_INTERVAL = 15
 UNITS_REFRESH_EVERY = 20  # re-read station.htm every N polls
+MAX_TOLERATED_FAILURES = 3  # consecutive failed polls before entities go unavailable
+
+# Sunlight luminous efficacy used to estimate lux from W/m² (same as Ecowitt/WU).
+LUX_PER_WM2 = 126.7
 
 # station.htm <select> name -> {option value: unit}. None = unsupported by HA.
 WIND_UNITS = {"0": "m/s", "1": "km/h", "2": "ft/s", "3": None, "4": "mph", "5": "kn"}

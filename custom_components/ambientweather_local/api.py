@@ -16,7 +16,9 @@ from html.parser import HTMLParser
 
 import aiohttp
 
-REQUEST_TIMEOUT = 10
+REQUEST_TIMEOUT = 8
+ATTEMPTS = 2
+RETRY_DELAY = 1.5
 MISSING_RE = re.compile(r"^[-\s.]*$|^0x-+$")
 MAC_RE = re.compile(
     r'name="mac_addr"[^>]*?value="([0-9A-Fa-f]{2}(?::[0-9A-Fa-f]{2}){5})"'
@@ -88,14 +90,26 @@ class AmbientLocalClient:
         self.host = host
 
     async def _get(self, path: str) -> str:
+        """GET a page. The module's tiny web server drops connections now and
+        then, so close the connection after each response (no stale keep-alive
+        reuse) and retry once before giving up."""
         url = f"http://{self.host}/{path}"
-        try:
-            async with asyncio.timeout(REQUEST_TIMEOUT):
-                async with self._session.get(url) as resp:
-                    resp.raise_for_status()
-                    return await resp.text(errors="replace")
-        except (aiohttp.ClientError, TimeoutError) as err:
-            raise CannotConnect(f"Error fetching {path}: {err}") from err
+        last: Exception | None = None
+        for attempt in range(ATTEMPTS):
+            if attempt:
+                await asyncio.sleep(RETRY_DELAY)
+            try:
+                async with asyncio.timeout(REQUEST_TIMEOUT):
+                    async with self._session.get(
+                        url, headers={"Connection": "close"}
+                    ) as resp:
+                        resp.raise_for_status()
+                        return await resp.text(errors="replace")
+            except (aiohttp.ClientError, TimeoutError) as err:
+                last = err
+        raise CannotConnect(
+            f"Error fetching {path}: {type(last).__name__}: {last}"
+        ) from last
 
     async def async_get_livedata(self) -> dict[str, str | None]:
         return parse_livedata(await self._get("livedata.htm"))
